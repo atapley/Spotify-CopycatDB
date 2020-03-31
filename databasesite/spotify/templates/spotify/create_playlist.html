@@ -1,0 +1,12 @@
+<h1><B>Songs in Database:</B></h1>
+{% for song in songs %}
+    <li>{{ song.artist }}, {{ song.title }}</li>
+    Add above song to playlist<input type="checkbox">
+{% endfor %}
+<footer>
+    <input
+        type="button"
+        value="Submit Playlist"
+        onclick="location.href='/submit_playlist'"
+    >
+</footer>
