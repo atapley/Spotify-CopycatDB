@@ -38,7 +38,7 @@ def single_viewer(request):
     ).to_records()
     full_playlist = []
     for x in full_playlist_results:
-        full_playlist.append('Song Title: ' + x[-2] + ', Artist: ' + x[-1])
+        full_playlist.append('Song Title: ' + x[-1] + ', Artist: ' + x[-2])
 
     playlist_details = Playlist.objects.filter(Q(playlistID=id)).values()[0]
     items['playlist'] = playlist_details
