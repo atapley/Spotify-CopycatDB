@@ -75,12 +75,16 @@ WSGI_APPLICATION = 'databasesite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+print('Please input a username and password for the DB server')
+username = input('Username: ')
+password = input('Password: ')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'spotify_copycatDB',
-        'USER': 'root',
-        'PASSWORD': 'password', #''lynch4488',
+        'USER': username,
+        'PASSWORD': password,
         'HOST': 'localhost',
         'PORT': '3306',
     }
