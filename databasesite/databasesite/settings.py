@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import pymysql
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,16 +75,24 @@ WSGI_APPLICATION = 'databasesite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+print('Please input a username and password for the DB server')
+username = input('Username: ')
+password = input('Password: ')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'spotify_copycatDB',
-        'USER': 'root',
-        'PASSWORD': 'lynch4488',
+        'USER': username,
+        'PASSWORD': password,
         'HOST': 'localhost',
         'PORT': '3306',
     }
 }
+
+# add ability to use with pymysql
+pymysql.version_info = (1, 4, 2, "final", 0)
+pymysql.install_as_MySQLdb()
 
 
 # Password validation

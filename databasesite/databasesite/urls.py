@@ -1,9 +1,10 @@
 from django.conf.urls import url
 from django.contrib import admin
-from spotify.views import home, playlist
+from spotify.views import home, playlist, login
 
 urlpatterns = [
-    url(r'^home$', home.startscreen),
+    url(r'^$', login.login_screen),
+    url(r'^user_home$', home.startscreen),
     url(r'^create_playlist$', playlist.create),
     url(r'^submit_playlist$', playlist.submit),
     url(r'^view_playlist$', playlist.view),
