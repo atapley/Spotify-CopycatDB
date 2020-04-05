@@ -18,6 +18,7 @@ def create(request):
 
 def view(request):
     items = {}
+    #Playlist.objects.raw('SELECT * FROM spotify_Playlist WHERE createdBy = \'User1\'')
     playlists = Playlist.objects.values()
     items['playlists'] = playlists
 
