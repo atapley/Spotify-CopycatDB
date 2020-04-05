@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import UserManager
 
 
 class Album(models.Model):
@@ -48,6 +48,8 @@ class SpotifyUser(models.Model):
     USERNAME_FIELD = 'username'
     is_anonymous = False
     is_authenticated = False
+
+    objects = UserManager()
 
 
 class UserFollow(models.Model):

@@ -1,5 +1,6 @@
 <h1>Welcome to Spotify Copycat!</h1>
-
+<form action="/login" method="post">
+    {% csrf_token %}
 <div>
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">
@@ -12,7 +13,7 @@
 </div>
 
 <input
-        type="button"
+        type="submit"
         value="Sign In"
-        onclick="location.href='/user_home'"
 >
+</form>
