@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^create_account$', signup.create_account),
     url(r'^user_home$', home.startscreen),
     url(r'^create_playlist$', playlist.create),
-    url(r'^submit_playlist$', playlist.submit),
+    url(r'^submit_playlist$', playlist.submit_playlist),
     url(r'^view_playlist$', playlist.view),
     url(r'^playlist_edit', playlist.edit),
     url(r'^update_playlist$', playlist.update),
