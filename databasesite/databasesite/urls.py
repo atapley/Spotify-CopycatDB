@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^create_playlist$', playlist.create),
     url(r'^submit_playlist$', playlist.submit),
     url(r'^view_playlist$', playlist.view),
+    url(r'^playlist_edit', playlist.edit),
+    url(r'^update_playlist$', playlist.update),
     url(r'^playlist_songs', playlist.single_viewer),
     url(r'^admin/', admin.site.urls),
 ]

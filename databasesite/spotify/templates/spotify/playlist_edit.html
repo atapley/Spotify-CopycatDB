@@ -1,0 +1,21 @@
+<h1>Playlist Editor</h1>
+<h2>Created by: {{ playlist.createdBy }}</h2>
+<form action="/update_playlist" method="post">
+    {% csrf_token %}
+    <div>
+        <label for="playlist title">Title:</label>
+        <input type="text" id="playlist title" name="playlist_title" value="{{ playlist.playlistName }}">
+    </div>
+
+    <div>
+        <label for="playlist id">ID (read only):</label>
+        <input type="text" id="playlist id" name="playlist_id" value="{{ playlist.playlistID }}" readonly>
+    </div>
+
+    <div>
+        <input
+                type="submit"
+                value="Update Title"
+        >
+    </div>
+</form>

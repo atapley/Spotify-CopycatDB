@@ -1,8 +1,21 @@
 <h1>Playlist Viewer</h1>
-{% for playlist in playlists %}
+<p>
+    Your Playlists:
+    {% for playlist in user_playlists %}
     <input
-        type="submit"
-        value="View: {{ playlist.playlistName }}"
-        onclick="location.href='/playlist_songs&playlist-id={{ playlist.playlistID }}'"
+            type="submit"
+            value="View: {{ playlist.playlistName }}"
+            onclick="location.href='/playlist_songs&playlist-id={{ playlist.playlistID }}'"
     >
-{% endfor %}
+    {% endfor %}
+</p>
+<p>
+    Other User's playlists:
+    {% for playlist in other_playlists %}
+    <input
+            type="submit"
+            value="View: {{ playlist.playlistName }}"
+            onclick="location.href='/playlist_songs&playlist-id={{ playlist.playlistID }}'"
+    >
+    {% endfor %}
+</p>

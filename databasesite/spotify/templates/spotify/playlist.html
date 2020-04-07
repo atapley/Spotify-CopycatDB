@@ -1,5 +1,12 @@
 <h1>Playlist: {{ playlist.playlistName }}</h1>
 <h2>Created by: {{ playlist.createdBy }}</h2>
+{% if edit %}
+   <input
+            type="submit"
+            value="Edit: {{ playlist.playlistName }}"
+            onclick="location.href='/playlist_edit&playlist-id={{ playlist.playlistID }}'"
+    >
+{% endif %}
 
 {% for song in songs %}
     <li>
