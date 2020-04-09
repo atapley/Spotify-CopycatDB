@@ -13,9 +13,30 @@
     </div>
 
     <div>
-        <input
-                type="submit"
-                value="Update Title"
-        >
+        <table align="left" style="width:50%">
+            <tr>
+                <th align="center">In Playlist</th>
+                <th align="left">Title</th>
+                <th align="left">Artist</th>
+            </tr>
+            {% for title,artist,in_playlist in songs %}
+                <tr>
+                    {% if in_playlist %}
+                        <td align="center"><input type="checkbox" value="check" checked></td>
+                    {% else %}
+                        <td align="center"><input type="checkbox" value="check"></td>
+                    {% endif %}
+                   <td align="left">{{title}}</td>
+                   <td align="left">{{artist}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <input type="submit" value="Update Playlist">
     </div>
 </form>
+
+<input
+        type="submit"
+        value="Cancel"
+        onclick="location.href='/playlist_songs&playlist-id={{ playlist.playlistID }}'">

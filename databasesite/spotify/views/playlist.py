@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from spotify.models import Song, Playlist, PlaylistSongs
 import pandas as pd
+from django.db import connection
 
 def submit_playlist(request):
     input_name = request.POST.get('play_name', 'ERROR')
@@ -71,6 +72,15 @@ def edit(request):
     id = request.path.split('=')[-1]
     playlist_details = Playlist.objects.filter(Q(playlistID=id)).values()[0]
     items['playlist'] = playlist_details
+
+    cursor = connection.cursor()
+    try:
+        cursor.callproc('spotify_copycatDB.in_playlist', [id])
+
+        items['songs'] = cursor.fetchall()
+    finally:
+        cursor.close()
+
     return render(request, 'spotify/playlist_edit.html', items)
 
 
