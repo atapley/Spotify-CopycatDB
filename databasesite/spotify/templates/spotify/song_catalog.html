@@ -1,0 +1,14 @@
+<h1><B>Songs in Database:</B></h1>
+
+<table align="left" style="width:50%">
+  <tr>
+    <th align="left">Title</th>
+    <th align="left">Artist</th>
+  </tr>
+  {% for song in songs %}
+    <tr>
+        <td align="left">{{song.title}}</td>
+        <td align="left">{{song.artist}}</td>
+    </tr>
+    {% endfor %}
+</table>

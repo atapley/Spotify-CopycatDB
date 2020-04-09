@@ -8,8 +8,8 @@ UserModel = get_user_model()
 
 
 def startscreen(request):
-    print(request.user)
-    print(request.user.username)
+    #print(request.user)
+    #print(request.user.username)
     items = {}
     return render(request, 'spotify/home.html', items)
 

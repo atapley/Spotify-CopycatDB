@@ -1,0 +1,15 @@
+<h1><B>Artists in Database:</B></h1>
+
+<table align="left" style="width:50%">
+  <tr>
+    <th align="left">Artist</th>
+    <th align="left">Main Genre</th>
+  </tr>
+  {% for artist,genre in artists %}
+    <tr>
+        <td align="left">{{artist}}</td>
+        <td align="left">{{genre}}</td>
+    </tr>
+    {% endfor %}
+</table>
+

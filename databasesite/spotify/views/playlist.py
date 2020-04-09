@@ -41,6 +41,7 @@ def single_viewer(request):
     id = request.path.split('=')[-1]
     playlist_songs = PlaylistSongs.objects.filter(Q(playlistID=id)).values()
     playlist_songs_df = pd.DataFrame.from_records(playlist_songs)
+
     songs = Song.objects.values('songID', 'title', 'artist')
     songs_df = pd.DataFrame.from_records(songs)
     full_playlist_results = playlist_songs_df.merge(
