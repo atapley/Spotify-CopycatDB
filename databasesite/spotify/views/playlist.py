@@ -4,14 +4,25 @@ from django.shortcuts import render
 from spotify.models import Song, Playlist, PlaylistSongs
 import pandas as pd
 
-def submit(request):
-    return HttpResponse('TEST Submission response page (submissions not yet working)')
+def submit_playlist(request):
+    input_name = request.POST.get('play_name', 'ERROR')
+
+    user_query = Playlist.objects.filter(Q(playlistName=input_name) & Q(createdBy=request.user.username)).values()
+
+    if not user_query:
+
+        id = Playlist.objects.order_by('playlistID').last().playlistID + 1
+
+        new_playlist = Playlist(playlistID = id, playlistName=input_name, createdBy=request.user.username)
+        new_playlist.save()
+        return HttpResponseRedirect('/user_home')
+
+    else:
+        return HttpResponseRedirect('/create_playlist')
 
 
 def create(request):
     items = {}
-    songs = Song.objects.values()
-    items['songs'] = songs
 
     return render(request, 'spotify/create_playlist.html', items)
 
@@ -30,6 +41,7 @@ def single_viewer(request):
     id = request.path.split('=')[-1]
     playlist_songs = PlaylistSongs.objects.filter(Q(playlistID=id)).values()
     playlist_songs_df = pd.DataFrame.from_records(playlist_songs)
+
     songs = Song.objects.values('songID', 'title', 'artist')
     songs_df = pd.DataFrame.from_records(songs)
     full_playlist_results = playlist_songs_df.merge(
