@@ -7,6 +7,7 @@ from django.db import connection
 
 def submit_playlist(request):
     input_name = request.POST.get('play_name', 'ERROR')
+    in_playlist = request.POST.getlist('songs[]')
 
     user_query = Playlist.objects.filter(Q(playlistName=input_name) & Q(createdBy=request.user.username)).values()
 
@@ -16,6 +17,9 @@ def submit_playlist(request):
 
         new_playlist = Playlist(playlistID = id, playlistName=input_name, createdBy=request.user.username)
         new_playlist.save()
+        for song in in_playlist:
+            new_pair = PlaylistSongs(songID=int(song), playlistID=id)
+            new_pair.save()
         return HttpResponseRedirect('/user_home')
 
     else:
@@ -24,6 +28,10 @@ def submit_playlist(request):
 
 def create(request):
     items = {}
+    songs = Song.objects.values()
+    for song in songs:
+        song['in_playlist'] = False
+    items['songs'] = songs
 
     return render(request, 'spotify/create_playlist.html', items)
 
