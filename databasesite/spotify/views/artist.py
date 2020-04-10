@@ -1,5 +1,7 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.db import connection
+from spotify.models import UserFollow
 
 
 def catalog(request):
@@ -9,7 +11,19 @@ def catalog(request):
     try:
         cursor.callproc('spotify_copycatDB.artist_catalog')
 
-        items['artists'] = cursor.fetchall()
+        artists = cursor.fetchall()
+        artist_list = []
+        user_follows = []
+        follows_artist = UserFollow.objects.filter(Q(username=request.user.username)).values('artist')
+        for artist in follows_artist:
+            user_follows.append(artist['artist'])
+        for tupl in artists:
+            if tupl[0] in user_follows:
+                artist_list.append({'artist': tupl[0], 'genre': tupl[1], 'liked': True})
+            else:
+                artist_list.append({'artist': tupl[0], 'genre': tupl[1], 'liked': False})
+        items['artists'] = artist_list
+
     finally:
         cursor.close()
 

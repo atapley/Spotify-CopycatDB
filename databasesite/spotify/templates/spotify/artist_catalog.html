@@ -1,17 +1,29 @@
 <h1><B>Artists in Database:</B></h1>
-
+<form action="/update_follows" method="post">
+    {% csrf_token %}
 <table align="left" style="width:50%">
   <tr>
     <th align="left">Artist</th>
     <th align="left">Main Genre</th>
+    <th align="left">Followed</th>
+
   </tr>
-  {% for artist,genre in artists %}
+  {% for artist in artists %}
     <tr>
-        <td align="left">{{artist}}</td>
-        <td align="left">{{genre}}</td>
+        <td align="left">{{artist.artist}}</td>
+        <td align="left">{{artist.genre}}</td>
+        <td>
+            <input type="checkbox" id="{{ artist.artist }}" name="artists[]" value="{{ artist.artist }}" {% if artist.liked %}checked{% endif %}>
+        </td>
     </tr>
     {% endfor %}
-</table>
+</table><div>
+    <input
+        type="submit"
+        value="Update Follows"
+        onclick="location.href='/update_follows'">
+</div>
+</form>
 
 <input
         type="submit"
