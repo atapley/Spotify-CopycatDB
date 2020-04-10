@@ -1,8 +1,4 @@
 from django.shortcuts import render
-from spotify.models import Artist, Genre
-from datetime import date
-from django.db.models import Q
-from django.http import HttpResponseRedirect
 from django.db import connection
 
 
