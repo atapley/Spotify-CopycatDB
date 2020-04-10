@@ -29,8 +29,6 @@ def submit_playlist(request):
 def create(request):
     items = {}
     songs = Song.objects.values()
-    for song in songs:
-        song['in_playlist'] = False
     items['songs'] = songs
 
     return render(request, 'spotify/create_playlist.html', items)
