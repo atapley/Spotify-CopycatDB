@@ -52,20 +52,23 @@ def single_viewer(request):
     playlist_songs_df = pd.DataFrame.from_records(playlist_songs)
 
     songs = Song.objects.values('songID', 'title', 'artist')
-    songs_df = pd.DataFrame.from_records(songs)
-    full_playlist_results = playlist_songs_df.merge(
-        songs_df,
-        how='inner',
-        on='songID'
-    ).to_dict()
-    full_playlist = []
-    for x in range(0, len(full_playlist_results['title'])):
-        full_playlist.append(
-            'Song Title: ' + full_playlist_results['title'][x] + ', Artist: ' + full_playlist_results['artist'][x]
-        )
+    if playlist_songs:
+        songs_df = pd.DataFrame.from_records(songs)
+        full_playlist_results = playlist_songs_df.merge(
+            songs_df,
+            how='inner',
+            on='songID'
+        ).to_dict()
+        full_playlist = []
+        for x in range(0, len(full_playlist_results['title'])):
+            full_playlist.append(
+                'Song Title: ' + full_playlist_results['title'][x] + ', Artist: ' + full_playlist_results['artist'][x]
+            )
+        items['songs'] = full_playlist
+    else:
+        items['songs'] = ['No songs in playlist']
     playlist_details = Playlist.objects.filter(Q(playlistID=id)).values()[0]
     items['playlist'] = playlist_details
-    items['songs'] = full_playlist
 
     if playlist_details['createdBy'] == request.user.username:
         items['edit'] = True
