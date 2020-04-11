@@ -12,6 +12,8 @@ urlpatterns = [
     url(r'^submit_playlist$', playlist.submit_playlist),
     url(r'^view_playlist$', playlist.view),
     url(r'^view_songs$', song.catalog),
+    url(r'^ask_remove/([0-9]+)/$', playlist.delete_screen),
+    url(r'^remove_playlist/([0-9]+)/$', playlist.remove),
     url(r'^view_artists$', artist.catalog),
     url(r'^playlist_edit', playlist.edit),
     url(r'^update_playlist$', playlist.update),

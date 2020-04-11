@@ -5,12 +5,27 @@
     <label for="play_name">Playlist Name:</label>
     <input type="text" id="play_name" name="play_name">
 </div>
-    {% for song in songs %}
-    <p>
-        <label for="{{ song.songID }}">{{ song.title }}, {{ song.artist }}:</label>
-        <input type="checkbox" id="{{ song.songID }}" name="songs[]" value="{{ song.songID }}">
-    </p>
+
+    <table align="left" style="width:50%">
+  <tr>
+    <th align="left">Title</th>
+    <th align="left">Artist</th>
+    <th align="left">Add to Playlist</th>
+  </tr>
+  {% for song in songs %}
+    <tr>
+        <td align="left">
+            <label for="{{ song.songID }}">{{ song.title }}</label>
+        </td>
+        <td align="left">
+            <label for="{{ song.songID }}">{{ song.artist }}</label>
+        </td>
+        <td align="left">
+            <input type="checkbox" id="{{ song.songID }}" name="songs[]" value="{{ song.songID }}">
+        </td>
+    </tr>
     {% endfor %}
+</table>
 <div>
     <input
         type="submit"

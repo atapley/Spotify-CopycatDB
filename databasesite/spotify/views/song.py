@@ -9,7 +9,7 @@ def catalog(request):
     user_likes = UserLikes.objects.filter(Q(username=request.user.username)).values()
     user_likes_ids = []
     for song in user_likes:
-        user_likes_ids.append(song['songID'])
+        user_likes_ids.append(song['songID_id'])
     for song in songs:
         if song['songID'] in user_likes_ids:
             song['liked'] = True

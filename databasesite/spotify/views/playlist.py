@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from spotify.models import Song, Playlist, PlaylistSongs
+from spotify.models import Song, Playlist, PlaylistSongs, SpotifyUser
 import pandas as pd
 from django.db import connection
 
@@ -15,10 +15,13 @@ def submit_playlist(request):
 
         id = Playlist.objects.order_by('playlistID').last().playlistID + 1
 
-        new_playlist = Playlist(playlistID = id, playlistName=input_name, createdBy=request.user.username)
+        new_playlist = Playlist(playlistID = id, playlistName=input_name, createdBy=request.user)
         new_playlist.save()
         for song in in_playlist:
-            new_pair = PlaylistSongs(songID=int(song), playlistID=id)
+            songID = int(song)
+            songInstance = Song.objects.filter(Q(songID=songID))[0]
+            playlistInstance = Playlist.objects.filter(Q(playlistID=id))[0]
+            new_pair = PlaylistSongs(songID= songInstance, playlistID=playlistInstance)
             new_pair.save()
         return HttpResponseRedirect('/user_home')
 
@@ -55,7 +58,8 @@ def single_viewer(request):
         full_playlist_results = playlist_songs_df.merge(
             songs_df,
             how='inner',
-            on='songID'
+            left_on='songID_id',
+            right_on='songID'
         ).to_dict()
         full_playlist = []
         for x in range(0, len(full_playlist_results['title'])):
@@ -68,7 +72,7 @@ def single_viewer(request):
     playlist_details = Playlist.objects.filter(Q(playlistID=id)).values()[0]
     items['playlist'] = playlist_details
 
-    if playlist_details['createdBy'] == request.user.username:
+    if playlist_details['createdBy_id'] == request.user.username:
         items['edit'] = True
     else:
         items['edit'] = False
@@ -97,12 +101,25 @@ def update(request):
     id = request.POST['playlist_id']
     new_title = request.POST['playlist_title']
     post_to_update = Playlist.objects.filter(Q(playlistID=id)).values()[0]
+    user = SpotifyUser.objects.filter(Q(username=post_to_update['createdBy_id']))[0]
     delete = Playlist.objects.filter(Q(playlistID=id))
     delete.delete()
     post_to_save = Playlist(
         playlistID = post_to_update['playlistID'],
         playlistName = new_title,
-        createdBy = post_to_update['createdBy']
+        createdBy = user
     )
     post_to_save.save()
+    return HttpResponseRedirect('/view_playlist')
+
+def delete_screen(request, id):
+    items = {}
+
+    playlist = Playlist.objects.filter(Q(playlistID=id)).values()[0]
+    items['playlist'] = playlist
+
+    return render(request, 'spotify/delete_screen.html', items)
+
+def remove(request, id):
+    Playlist.objects.filter(playlistID=id).delete()
     return HttpResponseRedirect('/view_playlist')

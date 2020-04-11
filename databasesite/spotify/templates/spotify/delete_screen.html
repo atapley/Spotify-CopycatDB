@@ -1,0 +1,11 @@
+<h1>Are you sure you want to remove {{ playlist.playlistName }}?</h1>
+
+<input
+        type="submit"
+        value="Delete Playlist"
+        onclick="location.href='/remove_playlist/{{ playlist.playlistID }}'">
+
+<input
+        type="submit"
+        value="Cancel"
+        onclick="location.href='/playlist_songs&playlist-id={{ playlist.playlistID }}'">
