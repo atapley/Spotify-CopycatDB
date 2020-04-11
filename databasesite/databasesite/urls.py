@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
-from spotify.views import home, playlist, login, signup, song, artist
+from spotify.views import home, playlist, login, signup, song, artist, likes
 
 urlpatterns = [
     url(r'^$', login.login_screen),
@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^playlist_edit', playlist.edit),
     url(r'^update_playlist$', playlist.update),
     url(r'^playlist_songs', playlist.single_viewer),
+    url(r'^update_likes', likes.update_likes),
     url(r'^admin/', admin.site.urls),
 ]
