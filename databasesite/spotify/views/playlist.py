@@ -100,6 +100,7 @@ def edit(request):
 def update(request):
     id = request.POST['playlist_id']
     new_title = request.POST['playlist_title']
+    songs = request.POST.getlist('songs[]')
     post_to_update = Playlist.objects.filter(Q(playlistID=id)).values()[0]
     user = SpotifyUser.objects.filter(Q(username=post_to_update['createdBy_id']))[0]
     delete = Playlist.objects.filter(Q(playlistID=id))
@@ -110,6 +111,14 @@ def update(request):
         createdBy = user
     )
     post_to_save.save()
+    playlist_songs_update = PlaylistSongs.objects.filter(Q(playlistID=id))
+    playlist_songs_update.delete()
+    for song in songs:
+        song_added = Song.objects.filter(Q(songID=int(song)))[0]
+        playlist_added = Playlist.objects.filter(Q(playlistID=id))[0]
+        add_song_to_playlist = PlaylistSongs(songID=song_added, playlistID=playlist_added)
+        add_song_to_playlist.save()
+
     return HttpResponseRedirect('/view_playlist')
 
 def delete_screen(request, id):
