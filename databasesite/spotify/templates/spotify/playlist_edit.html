@@ -19,15 +19,13 @@
                 <th align="left">Title</th>
                 <th align="left">Artist</th>
             </tr>
-            {% for title,artist,in_playlist in songs %}
+            {% for songID,title,artist,in_playlist in songs %}
                 <tr>
-                    {% if in_playlist %}
-                        <td align="center"><input type="checkbox" value="check" checked></td>
-                    {% else %}
-                        <td align="center"><input type="checkbox" value="check"></td>
-                    {% endif %}
-                   <td align="left">{{title}}</td>
-                   <td align="left">{{artist}}</td>
+                    <td align="center">
+                        <input type="checkbox" id="{{ songID }}" name="songs[]" value="{{ songID }}" {% if in_playlist %}checked{% endif %}>
+                    </td>
+                    <td align="left">{{title}}</td>
+                    <td align="left">{{artist}}</td>
                 </tr>
             {% endfor %}
         </table>
