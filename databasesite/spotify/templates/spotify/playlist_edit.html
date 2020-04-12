@@ -1,5 +1,5 @@
 <h1>Playlist Editor</h1>
-<h2>Created by: {{ playlist.createdBy }}</h2>
+<h2>Created by: {{ playlist.createdBy_id }}</h2>
 <form action="/update_playlist" method="post">
     {% csrf_token %}
     <div>

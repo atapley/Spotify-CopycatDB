@@ -10,7 +10,7 @@
   {% for song in songs %}
     <tr>
         <td align="left">{{song.title}}</td>
-        <td align="left">{{song.artist}}</td>
+        <td align="left">{{song.artist_id}}</td>
         <td>
             <input type="checkbox" id="{{ song.songID }}" name="songs[]" value="{{ song.songID }}" {% if song.liked %}checked{% endif %}>
         </td>
