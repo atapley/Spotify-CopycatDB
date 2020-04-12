@@ -13,7 +13,8 @@ DROP PROCEDURE IF EXISTS in_playlist;
 DELIMITER //
 CREATE PROCEDURE in_playlist(IN id int)
 BEGIN
-SELECT title, artist, (playlistID = id) as in_playlist
-FROM spotify_playlistsongs a JOIN spotify_song b ON a.songID = b.songID;
+SELECT title, artist, (playlistID IS NOT NULL) AS in_playlist
+FROM spotify_song a LEFT JOIN (SELECT * FROM spotify_playlistsongs b WHERE playlistID = id) AS temp
+ON a.songID = temp.songID;
 END //
 DELIMITER ;
