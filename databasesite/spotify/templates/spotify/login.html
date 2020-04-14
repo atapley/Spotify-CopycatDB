@@ -3,7 +3,7 @@
     {% csrf_token %}
 <div>
     <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
+    <input type="text" id="username" name="username" required>
 </div>
 
 <div>
@@ -11,6 +11,11 @@
     <input type="password" id="pass" name="password"
            minlength="8" required>
 </div>
+    <div>
+        {% if error_message %}
+            <span style='color: red'>Incorrect username/password</span>
+        {% endif %}
+    </div>
 
     <div>
 <input

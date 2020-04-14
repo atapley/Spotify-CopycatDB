@@ -4,7 +4,7 @@
     {% csrf_token %}
     <div>
         <label for="playlist title">Title:</label>
-        <input type="text" id="playlist title" name="playlist_title" value="{{ playlist.playlistName }}">
+        <input type="text" id="playlist title" name="playlist_title" value="{{ playlist.playlistName }}" minlength="1" required>
     </div>
 
     <div>

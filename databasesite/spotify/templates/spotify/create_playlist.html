@@ -1,37 +1,37 @@
 <h1><B>Songs in Database:</B></h1>
 <form action="/submit_playlist" method="post">
     {% csrf_token %}
-<div>
-    <label for="play_name">Playlist Name:</label>
-    <input type="text" id="play_name" name="play_name">
-</div>
+    <div>
+        <label for="play_name">Playlist Name:</label>
+        <input type="text" id="play_name" name="play_name" minlength="1" required>
+    </div>
 
     <table align="left" style="width:50%">
-  <tr>
-    <th align="left">Title</th>
-    <th align="left">Artist</th>
-    <th align="left">Add to Playlist</th>
-  </tr>
-  {% for song in songs %}
-    <tr>
-        <td align="left">
-            <label for="{{ song.songID }}">{{ song.title }}</label>
-        </td>
-        <td align="left">
-            <label for="{{ song.songID }}">{{ song.artist_id }}</label>
-        </td>
-        <td align="left">
-            <input type="checkbox" id="{{ song.songID }}" name="songs[]" value="{{ song.songID }}">
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-<div>
-    <input
-        type="submit"
-        value="Create Playlist"
-        onclick="location.href='/submit_playlist'">
-</div>
+        <tr>
+            <th align="left">Title</th>
+            <th align="left">Artist</th>
+            <th align="left">Add to Playlist</th>
+        </tr>
+        {% for song in songs %}
+        <tr>
+            <td align="left">
+                <label for="{{ song.songID }}">{{ song.title }}</label>
+            </td>
+            <td align="left">
+                <label for="{{ song.songID }}">{{ song.artist_id }}</label>
+            </td>
+            <td align="left">
+                <input type="checkbox" id="{{ song.songID }}" name="songs[]" value="{{ song.songID }}">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <input
+                type="submit"
+                value="Create Playlist"
+        >
+    </div>
 </form>
 
 <input

@@ -1,31 +1,32 @@
 <h1><B>Songs in Database:</B></h1>
 <form action="/update_likes" method="post">
     {% csrf_token %}
-<table align="left" style="width:50%">
-  <tr>
-    <th align="left">Title</th>
-    <th align="left">Artist</th>
-    <th align="left">Liked</th>
-  </tr>
-  {% for song in songs %}
-    <tr>
-        <td align="left">{{song.title}}</td>
-        <td align="left">{{song.artist_id}}</td>
-        <td>
-            <input type="checkbox" id="{{ song.songID }}" name="songs[]" value="{{ song.songID }}" {% if song.liked %}checked{% endif %}>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-<div>
-    <input
-        type="submit"
-        value="Update Likes"
-        onclick="location.href='/update_likes'">
-</div>
+    <table align="left" style="width:50%">
+        <tr>
+            <th align="left">Title</th>
+            <th align="left">Artist</th>
+            <th align="left">Liked</th>
+        </tr>
+        {% for song in songs %}
+        <tr>
+            <td align="left">{{song.title}}</td>
+            <td align="left">{{song.artist_id}}</td>
+            <td>
+                <input type="checkbox" id="{{ song.songID }}" name="songs[]" value="{{ song.songID }}" {% if song.liked %}checked{% endif %}>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <input
+                type="submit"
+                value="Update Likes"
+        >
+    </div>
 </form>
 
 <input
         type="submit"
         value="Back"
-        onclick="location.href='/user_home'">
+        onclick="location.href='/user_home'"
+>
