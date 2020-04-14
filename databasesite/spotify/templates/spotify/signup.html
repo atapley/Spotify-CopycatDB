@@ -1,29 +1,38 @@
 <h1>Create an account!</h1>
 <form action="/create_account" method="post">
     {% csrf_token %}
-<div>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
-</div>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" minlength="1" maxlength="50" required>
+    </div>
 
-<div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password"
-           minlength="8" required>
-</div>
-<div>
-    <label for="first_name">What should we call you?:</label>
-    <input type="text" id="first_name" name="first_name">
-</div>
-<div>
-    <input
-        type="submit"
-        value="Create Account"
-        onclick="location.href='/login'">
-</div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"
+               minlength="8" maxlength="50" required>
+    </div>
+    <div>
+        <label for="first_name">What should we call you?:</label>
+        <input type="text" id="first_name" name="first_name" minlength="1" maxlength="50" required>
+    </div>
+    <div>
+        {% if error_message %}
+        <span style='color: red'>Usernames and passwords cannot contain spaces!</span>
+        {% endif %}
+        {% if error_message_2 %}
+        <span style='color: red'>Username taken! Please choose a new username</span>
+        {% endif %}
+    </div>
+    <div>
+        <input
+                type="submit"
+                value="Create Account"
+        >
+    </div>
 </form>
 
 <input
         type="submit"
         value="Cancel"
-        onclick="location.href='/'">
+        onclick="location.href='/'"
+>

@@ -8,8 +8,6 @@ UserModel = get_user_model()
 
 
 def startscreen(request):
-    #print(request.user)
-    #print(request.user.username)
     items = {}
     return render(request, 'spotify/home.html', items)
 
@@ -22,4 +20,6 @@ def login_test(request):
         login(request, user)
         return HttpResponseRedirect('/user_home')
     else:
-        return HttpResponseRedirect('/')
+        items = {}
+        items['error_message'] = True
+        return render(request, 'spotify/login.html', items)
