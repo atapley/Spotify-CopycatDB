@@ -15,6 +15,8 @@ def submit_playlist(request):
 
         id = Playlist.objects.order_by('playlistID').last().playlistID + 1
 
+        first_name = SpotifyUser.objects.filter(Q(username=request.user.username)).values()[0]['firstName']
+
         new_playlist = Playlist(playlistID = id, playlistName=input_name, createdBy=request.user)
         new_playlist.save()
         for song in in_playlist:
@@ -23,7 +25,7 @@ def submit_playlist(request):
             playlistInstance = Playlist.objects.filter(Q(playlistID=id))[0]
             new_pair = PlaylistSongs(songID= songInstance, playlistID=playlistInstance)
             new_pair.save()
-        return HttpResponseRedirect('/user_home')
+        return HttpResponseRedirect('/user_home/' + first_name)
 
     else:
         return HttpResponseRedirect('/create_playlist')
@@ -34,6 +36,9 @@ def create(request):
     songs = Song.objects.values()
     items['songs'] = songs
 
+    first_name = SpotifyUser.objects.filter(Q(username=request.user.username)).values()[0]['firstName']
+    items['firstName'] = first_name
+
     return render(request, 'spotify/create_playlist.html', items)
 
 
@@ -43,6 +48,9 @@ def view(request):
     other_playlists = Playlist.objects.filter(~Q(createdBy=request.user.username)).values()
     items['user_playlists'] = user_playlists
     items['other_playlists'] = other_playlists
+
+    first_name = SpotifyUser.objects.filter(Q(username=request.user.username)).values()[0]['firstName']
+    items['firstName'] = first_name
 
     return render(request, 'spotify/view_playlist.html', items)
 

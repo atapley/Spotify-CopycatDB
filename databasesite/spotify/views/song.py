@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render
-from spotify.models import Song, UserLikes
+from spotify.models import Song, UserLikes, SpotifyUser
 
 def catalog(request):
     items = {}
@@ -8,6 +8,9 @@ def catalog(request):
     songs = Song.objects.values()
     user_likes = UserLikes.objects.filter(Q(username=request.user.username)).values()
     user_likes_ids = []
+
+    first_name = SpotifyUser.objects.filter(Q(username=request.user.username)).values()[0]['firstName']
+    items['firstName'] = first_name
     for song in user_likes:
         user_likes_ids.append(song['songID_id'])
     for song in songs:

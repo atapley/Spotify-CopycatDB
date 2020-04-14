@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^login$', home.login_test),
     url(r'^signup$', signup.signup_screen),
     url(r'^create_account$', signup.create_account),
-    url(r'^user_home$', home.startscreen),
+    url(r'^user_home/(\w+)/$', home.startscreen),
     url(r'^create_playlist$', playlist.create),
     url(r'^submit_playlist$', playlist.submit_playlist),
     url(r'^view_playlist$', playlist.view),

@@ -29,9 +29,12 @@ def create_account(request):
 
         new_user = SpotifyUser(username = input_user, password = input_pass, firstName = input_name, dateJoined = input_date)
         new_user.save()
+
+        first_name = SpotifyUser.objects.filter(Q(username=input_user)).values()[0]['firstName']
+
         user = UserModel._default_manager.get_by_natural_key(input_user)
         login(request, user)
-        return HttpResponseRedirect('/user_home')
+        return HttpResponseRedirect('/user_home/' + first_name)
 
     else:
         items = {}
